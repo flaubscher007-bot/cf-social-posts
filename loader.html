@@ -1,0 +1,11 @@
+<!doctype html><meta charset="utf-8"><title>cf loader</title>
+<script>
+window.addEventListener('message',async e=>{
+  if(!e.data||!e.data.cfWant)return;
+  const name=e.data.cfWant;
+  try{const r=await fetch(encodeURIComponent(name));const buf=await r.arrayBuffer();
+    e.source.postMessage({cfName:name,buf},e.origin,[buf]);}
+  catch(err){e.source.postMessage({cfName:name,err:String(err)},e.origin);}
+});
+parent.postMessage({cfReady:true},'*');
+</script>
